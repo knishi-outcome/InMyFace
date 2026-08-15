@@ -96,7 +96,7 @@ final class ReminderCoordinator: NSObject, ObservableObject {
     }
 
     /// Shows a realistic sample without requiring an upcoming calendar event.
-    func preview() {
+    func preview(theme: NotificationTheme? = nil) {
         let startDate = Date().addingTimeInterval(
             TimeInterval(settings.leadTimeMinutes * 60)
         )
@@ -107,13 +107,20 @@ final class ReminderCoordinator: NSObject, ObservableObject {
             endDate: startDate.addingTimeInterval(45 * 60),
             calendarTitle: "プレビュー",
             calendarColorHex: "#7C5CFC",
-            meetingURL: URL(string: "https://meet.google.com/abc-defg-hij")
+            meetingURL: URL(string: "https://meeting.example.invalid/preview")
         )
 
-        preview(event: sampleEvent)
+        preview(
+            event: sampleEvent,
+            theme: theme ?? settings.notificationTheme
+        )
     }
 
     func preview(event: CalendarEventItem) {
+        preview(event: event, theme: settings.notificationTheme)
+    }
+
+    private func preview(event: CalendarEventItem, theme: NotificationTheme) {
         overlayController.dismiss()
 
         let token = UUID()
@@ -125,6 +132,7 @@ final class ReminderCoordinator: NSObject, ObservableObject {
         overlayController.show(
             event: event,
             snoozeMinutes: settings.snoozeMinutes,
+            theme: theme,
             showOnAllDisplays: settings.showOnAllDisplays,
             onDismiss: { [weak self] in
                 self?.finishPreview(token: token)
@@ -405,6 +413,7 @@ final class ReminderCoordinator: NSObject, ObservableObject {
         overlayController.show(
             event: event,
             snoozeMinutes: snoozeMinutes,
+            theme: settings.notificationTheme,
             showOnAllDisplays: settings.showOnAllDisplays,
             onDismiss: { [weak self] in
                 self?.dismiss(event: event, token: token)

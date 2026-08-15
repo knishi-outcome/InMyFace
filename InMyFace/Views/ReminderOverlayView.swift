@@ -8,6 +8,7 @@ import SwiftUI
 struct ReminderOverlayView: View {
     let event: CalendarEventItem
     let snoozeMinutes: Int
+    let theme: NotificationTheme
     let onJoin: (URL) -> Void
     let onSnooze: () -> Void
     let onDismiss: () -> Void
@@ -17,7 +18,14 @@ struct ReminderOverlayView: View {
     @State private var glowIsExpanded = false
 
     private var accent: Color {
-        Color(calendarHex: event.calendarColorHex)
+        switch theme {
+        case .auroraGlass:
+            Color(calendarHex: event.calendarColorHex)
+        case .smartGlass:
+            Color(red: 0.38, green: 0.96, blue: 0.91)
+        case .aiConcierge:
+            Color(red: 0.23, green: 0.76, blue: 1)
+        }
     }
 
     var body: some View {
@@ -59,7 +67,19 @@ struct ReminderOverlayView: View {
         }
     }
 
+    @ViewBuilder
     private var background: some View {
+        switch theme {
+        case .auroraGlass:
+            auroraBackground
+        case .smartGlass:
+            smartGlassBackground
+        case .aiConcierge:
+            aiConciergeBackground
+        }
+    }
+
+    private var auroraBackground: some View {
         ZStack {
             LinearGradient(
                 stops: [
@@ -102,10 +122,91 @@ struct ReminderOverlayView: View {
         .accessibilityHidden(true)
     }
 
+    private var smartGlassBackground: some View {
+        ZStack {
+            Color.black.opacity(0.12)
+
+            LinearGradient(
+                colors: [accent.opacity(0.045), .clear, Color.black.opacity(0.10)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+
+            GeometryReader { proxy in
+                Path { path in
+                    let inset: CGFloat = 34
+                    let length: CGFloat = 82
+                    path.move(to: CGPoint(x: inset, y: inset + length))
+                    path.addLine(to: CGPoint(x: inset, y: inset))
+                    path.addLine(to: CGPoint(x: inset + length, y: inset))
+                    path.move(to: CGPoint(x: proxy.size.width - inset - length, y: inset))
+                    path.addLine(to: CGPoint(x: proxy.size.width - inset, y: inset))
+                    path.addLine(to: CGPoint(x: proxy.size.width - inset, y: inset + length))
+                    path.move(to: CGPoint(x: inset, y: proxy.size.height - inset - length))
+                    path.addLine(to: CGPoint(x: inset, y: proxy.size.height - inset))
+                    path.addLine(to: CGPoint(x: inset + length, y: proxy.size.height - inset))
+                    path.move(to: CGPoint(x: proxy.size.width - inset - length, y: proxy.size.height - inset))
+                    path.addLine(to: CGPoint(x: proxy.size.width - inset, y: proxy.size.height - inset))
+                    path.addLine(to: CGPoint(x: proxy.size.width - inset, y: proxy.size.height - inset - length))
+                }
+                .stroke(accent.opacity(0.34), style: StrokeStyle(lineWidth: 1, dash: [2, 5]))
+            }
+        }
+        .accessibilityHidden(true)
+    }
+
+    private var aiConciergeBackground: some View {
+        ZStack {
+            LinearGradient(
+                stops: [
+                    .init(color: Color(red: 0.015, green: 0.035, blue: 0.055).opacity(0.97), location: 0),
+                    .init(color: Color(red: 0.012, green: 0.018, blue: 0.035).opacity(0.96), location: 0.62),
+                    .init(color: .black.opacity(0.98), location: 1)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+
+            GridPattern(spacing: 48)
+                .stroke(accent.opacity(0.055), lineWidth: 0.7)
+
+            Circle()
+                .fill(accent.opacity(0.16))
+                .frame(width: 580, height: 580)
+                .blur(radius: 135)
+                .offset(x: -420, y: -300)
+
+            LinearGradient(
+                colors: [.clear, accent.opacity(0.12), .clear],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+            .frame(height: 1)
+            .offset(y: -170)
+        }
+        .accessibilityHidden(true)
+    }
+
     private func content(scale: CGFloat) -> some View {
         VStack(spacing: 28 * scale) {
-            TimelineView(.periodic(from: .now, by: 1)) { context in
-                clockAndCountdown(now: context.date, scale: scale)
+            VStack(spacing: 20 * scale) {
+                interfaceHeader(scale: scale)
+
+                TimelineView(.periodic(from: .now, by: 1)) { context in
+                    clockAndCountdown(now: context.date, scale: scale)
+                }
+            }
+            .padding(.horizontal, theme == .smartGlass ? 24 * scale : 0)
+            .padding(.vertical, theme == .smartGlass ? 20 * scale : 0)
+            .background {
+                if theme == .smartGlass {
+                    let shape = RoundedRectangle(cornerRadius: 14 * scale, style: .continuous)
+                    shape
+                        .fill(.ultraThinMaterial.opacity(0.78))
+                        .overlay { shape.fill(Color.black.opacity(0.24)) }
+                        .overlay { shape.stroke(accent.opacity(0.28), lineWidth: 0.8) }
+                        .shadow(color: .black.opacity(0.18), radius: 22, y: 10)
+                }
             }
 
             eventCard(scale: scale)
@@ -115,14 +216,45 @@ struct ReminderOverlayView: View {
         }
     }
 
+    @ViewBuilder
+    private func interfaceHeader(scale: CGFloat) -> some View {
+        switch theme {
+        case .auroraGlass:
+            EmptyView()
+        case .smartGlass:
+            HStack(spacing: 10 * scale) {
+                Image(systemName: "viewfinder")
+                Text("CALENDAR FOCUS")
+                    .tracking(2.4 * scale)
+                Spacer()
+                Text("LIVE")
+                Circle().fill(accent).frame(width: 5 * scale, height: 5 * scale)
+            }
+            .font(.system(size: 11 * scale, weight: .medium, design: .monospaced))
+            .foregroundStyle(accent.opacity(0.78))
+            .padding(.horizontal, 2)
+        case .aiConcierge:
+            HStack(spacing: 12 * scale) {
+                Image(systemName: "waveform.path.ecg")
+                Text("SCHEDULE INTELLIGENCE")
+                    .tracking(2.8 * scale)
+                Rectangle().fill(accent.opacity(0.35)).frame(height: 1)
+                Text("PRIORITY BRIEFING")
+                    .foregroundStyle(.white.opacity(0.46))
+            }
+            .font(.system(size: 11 * scale, weight: .semibold, design: .monospaced))
+            .foregroundStyle(accent)
+        }
+    }
+
     private func clockAndCountdown(now: Date, scale: CGFloat) -> some View {
         let countdown = CountdownDisplay(now: now, startDate: event.startDate, endDate: event.endDate)
 
         return VStack(spacing: 14 * scale) {
             Text(now, format: .dateTime.hour().minute())
-                .font(.system(size: 112 * scale, weight: .thin, design: .rounded))
+                .font(clockFont(scale: scale))
                 .monospacedDigit()
-                .tracking(-4 * scale)
+                .tracking(theme == .aiConcierge ? 4 * scale : -4 * scale)
                 .foregroundStyle(.white)
                 .shadow(color: accent.opacity(0.22), radius: 30, y: 8)
                 .accessibilityLabel("Current time")
@@ -134,24 +266,66 @@ struct ReminderOverlayView: View {
                     .shadow(color: accent.opacity(0.9), radius: 8)
 
                 Text(countdown.label.uppercased())
-                    .font(.system(size: 14 * scale, weight: .semibold, design: .rounded))
+                    .font(.system(
+                        size: 14 * scale,
+                        weight: .semibold,
+                        design: theme == .auroraGlass ? .rounded : .monospaced
+                    ))
                     .tracking(2.4 * scale)
                     .foregroundStyle(.white.opacity(0.62))
 
                 Text(countdown.value)
-                    .font(.system(size: 30 * scale, weight: .semibold, design: .rounded))
+                    .font(.system(
+                        size: 30 * scale,
+                        weight: .semibold,
+                        design: theme == .auroraGlass ? .rounded : .monospaced
+                    ))
                     .monospacedDigit()
                     .foregroundStyle(.white)
             }
             .padding(.horizontal, 20 * scale)
             .padding(.vertical, 11 * scale)
-            .background(.white.opacity(0.07), in: Capsule())
+            .background(countdownBackground)
             .overlay {
-                Capsule()
-                    .stroke(.white.opacity(0.11), lineWidth: 1)
+                countdownBorder
             }
             .accessibilityElement(children: .combine)
             .accessibilityLabel("\(countdown.label), \(countdown.accessibilityValue)")
+        }
+    }
+
+    private func clockFont(scale: CGFloat) -> Font {
+        switch theme {
+        case .auroraGlass:
+            .system(size: 112 * scale, weight: .thin, design: .rounded)
+        case .smartGlass:
+            .system(size: 104 * scale, weight: .ultraLight, design: .monospaced)
+        case .aiConcierge:
+            .system(size: 96 * scale, weight: .light, design: .monospaced)
+        }
+    }
+
+    @ViewBuilder
+    private var countdownBackground: some View {
+        switch theme {
+        case .auroraGlass:
+            Capsule().fill(.white.opacity(0.07))
+        case .smartGlass:
+            RoundedRectangle(cornerRadius: 6).fill(.black.opacity(0.18))
+        case .aiConcierge:
+            RoundedRectangle(cornerRadius: 3).fill(accent.opacity(0.075))
+        }
+    }
+
+    @ViewBuilder
+    private var countdownBorder: some View {
+        switch theme {
+        case .auroraGlass:
+            Capsule().stroke(.white.opacity(0.11), lineWidth: 1)
+        case .smartGlass:
+            RoundedRectangle(cornerRadius: 6).stroke(accent.opacity(0.27), lineWidth: 0.8)
+        case .aiConcierge:
+            RoundedRectangle(cornerRadius: 3).stroke(accent.opacity(0.33), lineWidth: 1)
         }
     }
 
@@ -177,7 +351,11 @@ struct ReminderOverlayView: View {
             }
 
             Text(event.title)
-                .font(.system(size: 43 * scale, weight: .bold, design: .rounded))
+                .font(.system(
+                    size: theme == .aiConcierge ? 39 * scale : 43 * scale,
+                    weight: theme == .smartGlass ? .medium : .bold,
+                    design: theme == .aiConcierge ? .default : .rounded
+                ))
                 .tracking(-0.9 * scale)
                 .foregroundStyle(.white)
                 .lineLimit(3)
@@ -209,31 +387,71 @@ struct ReminderOverlayView: View {
         }
         .padding(32 * scale)
         .background {
-            RoundedRectangle(cornerRadius: 32 * scale, style: .continuous)
+            eventCardBackground(scale: scale)
+        }
+    }
+
+    @ViewBuilder
+    private func eventCardBackground(scale: CGFloat) -> some View {
+        switch theme {
+        case .auroraGlass:
+            let shape = RoundedRectangle(cornerRadius: 32 * scale, style: .continuous)
+            shape
                 .fill(.ultraThinMaterial)
                 .overlay {
-                    RoundedRectangle(cornerRadius: 32 * scale, style: .continuous)
-                        .fill(
-                            LinearGradient(
-                                colors: [accent.opacity(0.10), .white.opacity(0.025), .clear],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
+                    shape.fill(
+                        LinearGradient(
+                            colors: [accent.opacity(0.10), .white.opacity(0.025), .clear],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
                         )
+                    )
                 }
                 .overlay {
-                    RoundedRectangle(cornerRadius: 32 * scale, style: .continuous)
-                        .stroke(
-                            LinearGradient(
-                                colors: [.white.opacity(0.25), accent.opacity(0.18), .white.opacity(0.06)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: 1
-                        )
+                    shape.stroke(
+                        LinearGradient(
+                            colors: [.white.opacity(0.25), accent.opacity(0.18), .white.opacity(0.06)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        lineWidth: 1
+                    )
                 }
                 .shadow(color: .black.opacity(0.45), radius: 42, y: 20)
                 .shadow(color: accent.opacity(0.10), radius: 52)
+        case .smartGlass:
+            let shape = RoundedRectangle(cornerRadius: 13 * scale, style: .continuous)
+            shape
+                .fill(.ultraThinMaterial.opacity(0.52))
+                .overlay { shape.fill(Color.black.opacity(0.10)) }
+                .overlay {
+                    shape.stroke(
+                        LinearGradient(
+                            colors: [accent.opacity(0.52), .white.opacity(0.13), accent.opacity(0.18)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        lineWidth: 0.8
+                    )
+                }
+                .shadow(color: .black.opacity(0.2), radius: 20, y: 10)
+        case .aiConcierge:
+            let shape = RoundedRectangle(cornerRadius: 8 * scale, style: .continuous)
+            shape
+                .fill(
+                    LinearGradient(
+                        colors: [Color(red: 0.025, green: 0.09, blue: 0.13).opacity(0.94), .black.opacity(0.88)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .overlay(alignment: .top) {
+                    LinearGradient(colors: [.clear, accent, .clear], startPoint: .leading, endPoint: .trailing)
+                        .frame(height: 1)
+                        .padding(.horizontal, 18 * scale)
+                }
+                .overlay { shape.stroke(accent.opacity(0.24), lineWidth: 1) }
+                .shadow(color: accent.opacity(0.11), radius: 34)
         }
     }
 
@@ -248,7 +466,7 @@ struct ReminderOverlayView: View {
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(event.meetingURL == nil ? .white.opacity(0.38) : .white)
                     .background {
-                        RoundedRectangle(cornerRadius: 15 * scale, style: .continuous)
+                        RoundedRectangle(cornerRadius: actionCornerRadius(scale), style: .continuous)
                             .fill(
                                 LinearGradient(
                                     colors: event.meetingURL == nil
@@ -274,11 +492,11 @@ struct ReminderOverlayView: View {
                 actionLabel("Snooze \(snoozeMinutes) min", systemImage: "moon.zzz.fill", scale: scale)
                     .foregroundStyle(.white.opacity(0.9))
                     .background {
-                        RoundedRectangle(cornerRadius: 15 * scale, style: .continuous)
+                        RoundedRectangle(cornerRadius: actionCornerRadius(scale), style: .continuous)
                             .fill(.white.opacity(0.09))
                             .overlay {
-                                RoundedRectangle(cornerRadius: 15 * scale, style: .continuous)
-                                    .stroke(.white.opacity(0.10), lineWidth: 1)
+                                RoundedRectangle(cornerRadius: actionCornerRadius(scale), style: .continuous)
+                                    .stroke(secondaryActionBorder, lineWidth: 1)
                             }
                     }
             }
@@ -289,11 +507,11 @@ struct ReminderOverlayView: View {
                 actionLabel("Dismiss", systemImage: "xmark", scale: scale)
                     .foregroundStyle(.white.opacity(0.72))
                     .background {
-                        RoundedRectangle(cornerRadius: 15 * scale, style: .continuous)
+                        RoundedRectangle(cornerRadius: actionCornerRadius(scale), style: .continuous)
                             .fill(.white.opacity(0.055))
                             .overlay {
-                                RoundedRectangle(cornerRadius: 15 * scale, style: .continuous)
-                                    .stroke(.white.opacity(0.08), lineWidth: 1)
+                                RoundedRectangle(cornerRadius: actionCornerRadius(scale), style: .continuous)
+                                    .stroke(secondaryActionBorder.opacity(0.78), lineWidth: 1)
                             }
                     }
             }
@@ -305,17 +523,55 @@ struct ReminderOverlayView: View {
 
     private func actionLabel(_ title: String, systemImage: String, scale: CGFloat) -> some View {
         Label(title, systemImage: systemImage)
-            .font(.system(size: 16 * scale, weight: .semibold, design: .rounded))
+            .font(.system(
+                size: 16 * scale,
+                weight: .semibold,
+                design: theme == .auroraGlass ? .rounded : .monospaced
+            ))
             .lineLimit(1)
             .padding(.horizontal, 21 * scale)
             .frame(minHeight: 54 * scale)
             .contentShape(Rectangle())
     }
 
+    private func actionCornerRadius(_ scale: CGFloat) -> CGFloat {
+        switch theme {
+        case .auroraGlass: 15 * scale
+        case .smartGlass: 7 * scale
+        case .aiConcierge: 3 * scale
+        }
+    }
+
+    private var secondaryActionBorder: Color {
+        theme == .auroraGlass ? .white.opacity(0.10) : accent.opacity(0.24)
+    }
+
     private var timeRange: String {
         let start = event.startDate.formatted(date: .omitted, time: .shortened)
         let end = event.endDate.formatted(date: .omitted, time: .shortened)
         return "\(start) – \(end)"
+    }
+}
+
+private struct GridPattern: Shape {
+    let spacing: CGFloat
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        var x = rect.minX
+        while x <= rect.maxX {
+            path.move(to: CGPoint(x: x, y: rect.minY))
+            path.addLine(to: CGPoint(x: x, y: rect.maxY))
+            x += spacing
+        }
+
+        var y = rect.minY
+        while y <= rect.maxY {
+            path.move(to: CGPoint(x: rect.minX, y: y))
+            path.addLine(to: CGPoint(x: rect.maxX, y: y))
+            y += spacing
+        }
+        return path
     }
 }
 

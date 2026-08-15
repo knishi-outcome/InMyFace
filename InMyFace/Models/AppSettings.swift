@@ -1,6 +1,41 @@
 import Combine
 import Foundation
 
+enum NotificationTheme: String, Codable, CaseIterable, Identifiable {
+    case auroraGlass
+    case smartGlass
+    case aiConcierge
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .auroraGlass: "Aurora Glass"
+        case .smartGlass: "Smart Glass"
+        case .aiConcierge: "AI Concierge"
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .auroraGlass:
+            "色彩と奥行きのある、従来のガラス調デザイン"
+        case .smartGlass:
+            "背景を活かす、軽量で透明なスマートグラスHUD"
+        case .aiConcierge:
+            "精密な情報レイアウトで伝える、知的なシステムUI"
+        }
+    }
+
+    var systemImage: String {
+        switch self {
+        case .auroraGlass: "sparkles.rectangle.stack"
+        case .smartGlass: "eyeglasses"
+        case .aiConcierge: "waveform.path.ecg.rectangle"
+        }
+    }
+}
+
 @MainActor
 final class AppSettings: ObservableObject {
     static let leadTimeRange = 1...60
@@ -55,6 +90,12 @@ final class AppSettings: ObservableObject {
         }
     }
 
+    @Published var notificationTheme: NotificationTheme {
+        didSet {
+            defaults.set(notificationTheme.rawValue, forKey: Keys.notificationTheme)
+        }
+    }
+
     /// Distinguishes a deliberate empty selection from the first launch, when no
     /// calendar list was available yet.
     @Published private(set) var hasInitializedCalendarSelection: Bool
@@ -87,6 +128,9 @@ final class AppSettings: ObservableObject {
         } else {
             showOnAllDisplays = defaults.bool(forKey: Keys.showOnAllDisplays)
         }
+
+        notificationTheme = defaults.string(forKey: Keys.notificationTheme)
+            .flatMap(NotificationTheme.init(rawValue:)) ?? .auroraGlass
 
         hasInitializedCalendarSelection = defaults.bool(
             forKey: Keys.hasInitializedCalendarSelection
@@ -135,6 +179,7 @@ final class AppSettings: ObservableObject {
         static let snoozeMinutes = "settings.snoozeMinutes"
         static let selectedCalendarIDs = "settings.selectedCalendarIDs"
         static let showOnAllDisplays = "settings.showOnAllDisplays"
+        static let notificationTheme = "settings.notificationTheme"
         static let hasInitializedCalendarSelection =
             "settings.hasInitializedCalendarSelection"
     }

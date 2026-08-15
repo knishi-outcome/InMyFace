@@ -76,6 +76,20 @@ struct SettingsView: View {
     private var reminderSettings: some View {
         ScrollView {
             VStack(spacing: 14) {
+                settingsCard(title: "通知デザイン", systemImage: "paintpalette.fill") {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("通知の見た目を選択できます。上のプレビューボタンで全画面表示を確認できます。")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+
+                        HStack(spacing: 10) {
+                            ForEach(NotificationTheme.allCases) { theme in
+                                themeChoice(theme)
+                            }
+                        }
+                    }
+                }
+
                 settingsCard(title: "通知タイミング", systemImage: "timer") {
                     VStack(alignment: .leading, spacing: 12) {
                         HStack {
@@ -167,6 +181,105 @@ struct SettingsView: View {
                 }
             }
             .padding(.vertical, 12)
+        }
+    }
+
+    private func themeChoice(_ theme: NotificationTheme) -> some View {
+        Button {
+            settings.notificationTheme = theme
+        } label: {
+            VStack(alignment: .leading, spacing: 9) {
+                themeSwatch(theme)
+                    .frame(height: 48)
+
+                Label(theme.displayName, systemImage: theme.systemImage)
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .lineLimit(1)
+
+                Text(theme.description)
+                    .font(.system(size: 10))
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(2)
+                    .frame(minHeight: 25, alignment: .topLeading)
+            }
+            .padding(10)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: 11, style: .continuous)
+                    .fill(settings.notificationTheme == theme
+                          ? Color.indigo.opacity(0.10)
+                          : Color.primary.opacity(0.025))
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: 11, style: .continuous)
+                    .stroke(
+                        settings.notificationTheme == theme
+                            ? Color.indigo.opacity(0.85)
+                            : Color.primary.opacity(0.09),
+                        lineWidth: settings.notificationTheme == theme ? 1.5 : 1
+                    )
+            }
+            .overlay(alignment: .topTrailing) {
+                if settings.notificationTheme == theme {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(.indigo)
+                        .background(.background, in: Circle())
+                        .padding(6)
+                }
+            }
+            .contentShape(RoundedRectangle(cornerRadius: 11, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("通知デザイン: \(theme.displayName)")
+        .accessibilityAddTraits(settings.notificationTheme == theme ? .isSelected : [])
+    }
+
+    @ViewBuilder
+    private func themeSwatch(_ theme: NotificationTheme) -> some View {
+        switch theme {
+        case .auroraGlass:
+            ZStack {
+                LinearGradient(
+                    colors: [Color.indigo.opacity(0.9), Color.purple.opacity(0.65), Color.black],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(.ultraThinMaterial)
+                    .frame(width: 72, height: 27)
+                    .overlay { RoundedRectangle(cornerRadius: 8).stroke(.white.opacity(0.28)) }
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        case .smartGlass:
+            ZStack {
+                LinearGradient(colors: [.black.opacity(0.74), .cyan.opacity(0.12)], startPoint: .top, endPoint: .bottom)
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(.white.opacity(0.035))
+                    .frame(width: 76, height: 27)
+                    .overlay { RoundedRectangle(cornerRadius: 4).stroke(.cyan.opacity(0.7), lineWidth: 0.7) }
+                HStack { Rectangle(); Spacer(); Rectangle() }
+                    .foregroundStyle(.cyan.opacity(0.5))
+                    .frame(height: 1)
+                    .padding(.horizontal, 9)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        case .aiConcierge:
+            ZStack {
+                Color(red: 0.01, green: 0.04, blue: 0.065)
+                VStack(spacing: 5) {
+                    HStack(spacing: 4) {
+                        Rectangle().fill(.cyan).frame(width: 16, height: 2)
+                        Rectangle().fill(.cyan.opacity(0.3)).frame(height: 1)
+                    }
+                    RoundedRectangle(cornerRadius: 2)
+                        .fill(.cyan.opacity(0.09))
+                        .frame(width: 78, height: 21)
+                        .overlay { RoundedRectangle(cornerRadius: 2).stroke(.cyan.opacity(0.42), lineWidth: 0.7) }
+                }
+                .padding(7)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
     }
 
