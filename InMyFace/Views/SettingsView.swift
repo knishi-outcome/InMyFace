@@ -33,22 +33,13 @@ struct SettingsView: View {
 
     private var hero: some View {
         HStack(spacing: 16) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .fill(
-                        LinearGradient(
-                            colors: [Color.indigo, Color.purple],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .shadow(color: Color.indigo.opacity(0.32), radius: 16, y: 7)
-
-                Image(systemName: "bell.and.waves.left.and.right.fill")
-                    .font(.system(size: 28, weight: .semibold))
-                    .foregroundStyle(.white)
-            }
-            .frame(width: 64, height: 64)
+            Image(nsImage: NSApp.applicationIconImage)
+                .resizable()
+                .interpolation(.high)
+                .scaledToFit()
+                .frame(width: 64, height: 64)
+                .shadow(color: .black.opacity(0.18), radius: 12, y: 6)
+                .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text("InMyFace")
@@ -349,7 +340,9 @@ struct SettingsView: View {
     }
 
     private func calendarRow(_ calendar: CalendarDescriptor) -> some View {
-        Toggle(isOn: Binding(
+        let isSelected = settings.selectedCalendarIDs.contains(calendar.id)
+
+        return Toggle(isOn: Binding(
             get: { settings.selectedCalendarIDs.contains(calendar.id) },
             set: { isSelected in
                 if isSelected {
@@ -371,12 +364,18 @@ struct SettingsView: View {
             .contentShape(Rectangle())
         }
         .toggleStyle(.switch)
+        .tint(.indigo)
+        .accessibilityValue(isSelected ? "通知する" : "通知しない")
         .padding(.horizontal, 12)
         .padding(.vertical, 9)
         .background(
             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(Color.primary.opacity(0.035))
+                .fill(isSelected ? Color.indigo.opacity(0.08) : Color.primary.opacity(0.035))
         )
+        .overlay {
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .stroke(isSelected ? Color.indigo.opacity(0.22) : .clear, lineWidth: 1)
+        }
     }
 
     private func settingsCard<Content: View>(
