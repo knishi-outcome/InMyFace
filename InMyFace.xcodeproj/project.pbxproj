@@ -19,6 +19,7 @@
 		D0000000000000000000000A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000000A /* SettingsView.swift */; };
 		D0000000000000000000000B /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0000000000000000000000D /* EventKit.framework */; };
 		D0000000000000000000000C /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0000000000000000000000E /* ServiceManagement.framework */; };
+		D0000000000000000000000D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000000F /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		C0000000000000000000000C /* InMyFace.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InMyFace.entitlements; sourceTree = "<group>"; };
 		C0000000000000000000000D /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		C0000000000000000000000E /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		C0000000000000000000000F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 		A00000000000000000000008 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C0000000000000000000000F /* Assets.xcassets */,
 				C0000000000000000000000B /* Info.plist */,
 				C0000000000000000000000C /* InMyFace.entitlements */,
 			);
@@ -188,6 +191,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0000000000000000000000D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +337,7 @@
 		F00000000000000000000003 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = InMyFace/Resources/InMyFace.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -359,7 +364,9 @@
 		F00000000000000000000004 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = InMyFace/Resources/InMyFace.entitlements;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;

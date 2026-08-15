@@ -22,6 +22,7 @@ final class OverlayController {
     func show(
         event: CalendarEventItem,
         snoozeMinutes: Int,
+        theme: NotificationTheme,
         showOnAllDisplays: Bool,
         onDismiss: @escaping () -> Void,
         onSnooze: @escaping () -> Void
@@ -52,7 +53,8 @@ final class OverlayController {
             makePanel(
                 for: screen,
                 event: event,
-                snoozeMinutes: max(1, snoozeMinutes)
+                snoozeMinutes: max(1, snoozeMinutes),
+                theme: theme
             )
         }
 
@@ -74,7 +76,8 @@ final class OverlayController {
     private func makePanel(
         for screen: NSScreen,
         event: CalendarEventItem,
-        snoozeMinutes: Int
+        snoozeMinutes: Int,
+        theme: NotificationTheme
     ) -> ReminderPanel {
         let panel = ReminderPanel(
             contentRect: screen.frame,
@@ -107,6 +110,7 @@ final class OverlayController {
         let rootView = ReminderOverlayView(
             event: event,
             snoozeMinutes: snoozeMinutes,
+            theme: theme,
             onJoin: { [weak self] url in
                 self?.join(url)
             },
