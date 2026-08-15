@@ -1,0 +1,20 @@
+.DS_Store
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.mobileprovision
+
+# Swift package build state
+.build/
+.swiftpm/

@@ -1,0 +1,409 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D00000000000000000000001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000001 /* AppDelegate.swift */; };
+		D00000000000000000000002 /* InMyFaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000002 /* InMyFaceApp.swift */; };
+		D00000000000000000000003 /* CalendarModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000003 /* CalendarModels.swift */; };
+		D00000000000000000000004 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000004 /* AppSettings.swift */; };
+		D00000000000000000000005 /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000005 /* CalendarService.swift */; };
+		D00000000000000000000006 /* ReminderCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000006 /* ReminderCoordinator.swift */; };
+		D00000000000000000000007 /* OverlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000007 /* OverlayController.swift */; };
+		D00000000000000000000008 /* ReminderOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000008 /* ReminderOverlayView.swift */; };
+		D00000000000000000000009 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000009 /* MenuBarView.swift */; };
+		D0000000000000000000000A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000000A /* SettingsView.swift */; };
+		D0000000000000000000000B /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0000000000000000000000D /* EventKit.framework */; };
+		D0000000000000000000000C /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0000000000000000000000E /* ServiceManagement.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B00000000000000000000002 /* InMyFace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InMyFace.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C00000000000000000000001 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C00000000000000000000002 /* InMyFaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMyFaceApp.swift; sourceTree = "<group>"; };
+		C00000000000000000000003 /* CalendarModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarModels.swift; sourceTree = "<group>"; };
+		C00000000000000000000004 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		C00000000000000000000005 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
+		C00000000000000000000006 /* ReminderCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCoordinator.swift; sourceTree = "<group>"; };
+		C00000000000000000000007 /* OverlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayController.swift; sourceTree = "<group>"; };
+		C00000000000000000000008 /* ReminderOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderOverlayView.swift; sourceTree = "<group>"; };
+		C00000000000000000000009 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		C0000000000000000000000A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C0000000000000000000000B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C0000000000000000000000C /* InMyFace.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InMyFace.entitlements; sourceTree = "<group>"; };
+		C0000000000000000000000D /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		C0000000000000000000000E /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E00000000000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0000000000000000000000B /* EventKit.framework in Frameworks */,
+				D0000000000000000000000C /* ServiceManagement.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A00000000000000000000002 = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000004 /* App */,
+				A00000000000000000000005 /* Models */,
+				A00000000000000000000006 /* Services */,
+				A00000000000000000000007 /* Views */,
+				A00000000000000000000008 /* Resources */,
+				A00000000000000000000009 /* Frameworks */,
+				A00000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A00000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B00000000000000000000002 /* InMyFace.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000004 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				C00000000000000000000001 /* AppDelegate.swift */,
+				C00000000000000000000002 /* InMyFaceApp.swift */,
+			);
+			path = InMyFace/App;
+			sourceTree = SOURCE_ROOT;
+		};
+		A00000000000000000000005 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C00000000000000000000003 /* CalendarModels.swift */,
+				C00000000000000000000004 /* AppSettings.swift */,
+			);
+			path = InMyFace/Models;
+			sourceTree = SOURCE_ROOT;
+		};
+		A00000000000000000000006 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C00000000000000000000005 /* CalendarService.swift */,
+				C00000000000000000000006 /* ReminderCoordinator.swift */,
+				C00000000000000000000007 /* OverlayController.swift */,
+			);
+			path = InMyFace/Services;
+			sourceTree = SOURCE_ROOT;
+		};
+		A00000000000000000000007 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C00000000000000000000008 /* ReminderOverlayView.swift */,
+				C00000000000000000000009 /* MenuBarView.swift */,
+				C0000000000000000000000A /* SettingsView.swift */,
+			);
+			path = InMyFace/Views;
+			sourceTree = SOURCE_ROOT;
+		};
+		A00000000000000000000008 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C0000000000000000000000B /* Info.plist */,
+				C0000000000000000000000C /* InMyFace.entitlements */,
+			);
+			path = InMyFace/Resources;
+			sourceTree = SOURCE_ROOT;
+		};
+		A00000000000000000000009 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C0000000000000000000000D /* EventKit.framework */,
+				C0000000000000000000000E /* ServiceManagement.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B00000000000000000000001 /* InMyFace */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = G00000000000000000000002 /* Build configuration list for PBXNativeTarget "InMyFace" */;
+			buildPhases = (
+				E00000000000000000000001 /* Sources */,
+				E00000000000000000000002 /* Frameworks */,
+				E00000000000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = InMyFace;
+			productName = InMyFace;
+			productReference = B00000000000000000000002 /* InMyFace.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A00000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					B00000000000000000000001 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+				};
+			};
+			buildConfigurationList = G00000000000000000000001 /* Build configuration list for PBXProject "InMyFace" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				ja,
+			);
+			mainGroup = A00000000000000000000002;
+			productRefGroup = A00000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B00000000000000000000001 /* InMyFace */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E00000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E00000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D00000000000000000000001 /* AppDelegate.swift in Sources */,
+				D00000000000000000000002 /* InMyFaceApp.swift in Sources */,
+				D00000000000000000000003 /* CalendarModels.swift in Sources */,
+				D00000000000000000000004 /* AppSettings.swift in Sources */,
+				D00000000000000000000005 /* CalendarService.swift in Sources */,
+				D00000000000000000000006 /* ReminderCoordinator.swift in Sources */,
+				D00000000000000000000007 /* OverlayController.swift in Sources */,
+				D00000000000000000000008 /* ReminderOverlayView.swift in Sources */,
+				D00000000000000000000009 /* MenuBarView.swift in Sources */,
+				D0000000000000000000000A /* SettingsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F00000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F00000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+		};
+			name = Release;
+		};
+		F00000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = InMyFace/Resources/InMyFace.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = InMyFace/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.knishi.InMyFace;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F00000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = InMyFace/Resources/InMyFace.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = InMyFace/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.knishi.InMyFace;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		G00000000000000000000001 /* Build configuration list for PBXProject "InMyFace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F00000000000000000000001 /* Debug */,
+				F00000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		G00000000000000000000002 /* Build configuration list for PBXNativeTarget "InMyFace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F00000000000000000000003 /* Debug */,
+				F00000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A00000000000000000000001 /* Project object */;
+}
