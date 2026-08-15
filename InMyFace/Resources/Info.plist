@@ -27,7 +27,7 @@
 	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>会議の開始前に全画面リマインダーを表示するため、カレンダーの予定を読み取ります。</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Personal use</string>
+	<string>Copyright © 2026 knishi-outcome</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSSupportsAutomaticGraphicsSwitching</key>

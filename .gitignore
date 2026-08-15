@@ -12,8 +12,18 @@ xcuserdata/
 !.env.example
 *.pem
 *.key
+*.p8
 *.p12
+*.pfx
 *.mobileprovision
+Secrets.xcconfig
+
+# Xcode archives and packaged products
+*.app/
+*.dSYM/
+*.xcarchive/
+*.xcresult/
+*.dmg
 
 # Swift package build state
 .build/

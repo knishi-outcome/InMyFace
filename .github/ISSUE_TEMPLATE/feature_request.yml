@@ -1,0 +1,33 @@
+name: 機能提案
+description: 新しい機能や改善案を提案します
+title: "[Feature]: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 解決したいこと
+      description: どのような場面で困っているかを記載してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 提案する方法
+      description: 希望する動作やUIがあれば記載してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 代替案
+      description: 検討した別の方法があれば記載してください。
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: 確認
+      options:
+        - label: この提案はInMyFaceの用途に関係しています。
+          required: true
