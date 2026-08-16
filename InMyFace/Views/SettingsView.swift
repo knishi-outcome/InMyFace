@@ -363,8 +363,7 @@ struct SettingsView: View {
             }
             .contentShape(Rectangle())
         }
-        .toggleStyle(.switch)
-        .tint(.indigo)
+        .toggleStyle(CalendarSelectionToggleStyle())
         .accessibilityValue(isSelected ? "通知する" : "通知しない")
         .padding(.horizontal, 12)
         .padding(.vertical, 9)
@@ -422,6 +421,71 @@ struct SettingsView: View {
             launchAtLoginMessage = "自動起動を変更できませんでした: \(error.localizedDescription)"
         }
         refreshLaunchAtLogin()
+    }
+}
+
+private struct CalendarSelectionToggleStyle: ToggleStyle {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.isEnabled) private var isEnabled
+
+    func makeBody(configuration: Configuration) -> some View {
+        Button {
+            if reduceMotion {
+                configuration.isOn.toggle()
+            } else {
+                withAnimation(.easeInOut(duration: 0.18)) {
+                    configuration.isOn.toggle()
+                }
+            }
+        } label: {
+            HStack(spacing: 12) {
+                configuration.label
+
+                ZStack(alignment: configuration.isOn ? .trailing : .leading) {
+                    Capsule(style: .continuous)
+                        .fill(configuration.isOn ? Color.indigo : Color(nsColor: .systemGray))
+
+                    Circle()
+                        .fill(.white)
+                        .frame(width: 21, height: 21)
+                        .overlay {
+                            if configuration.isOn {
+                                Image(systemName: "checkmark")
+                                    .font(.system(size: 9, weight: .black))
+                                    .foregroundStyle(.indigo)
+                                    .transition(
+                                        reduceMotion
+                                            ? .identity
+                                            : .scale(scale: 0.65).combined(with: .opacity)
+                                    )
+                            }
+                        }
+                        .padding(3)
+                }
+                .frame(width: 48, height: 27)
+                .overlay {
+                    Capsule(style: .continuous)
+                        .stroke(
+                            configuration.isOn
+                                ? Color.indigo.opacity(0.95)
+                                : Color.primary.opacity(0.28),
+                            lineWidth: 1
+                        )
+                }
+                .opacity(isEnabled ? 1 : 0.5)
+                .accessibilityHidden(true)
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        // Preserve native on/off semantics for VoiceOver while the Button keeps
+        // normal macOS focus and keyboard activation.
+        .accessibilityRepresentation {
+            Toggle(isOn: configuration.$isOn) {
+                configuration.label
+            }
+            .toggleStyle(.switch)
+        }
     }
 }
 
